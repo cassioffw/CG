@@ -1,15 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <list>
 #include <GL/glut.h>
-
-struct Point
-{
-    float x;
-    float y;
-};
-
-std::list<Point> pontos;
 
 void openFile()
 {
@@ -23,34 +14,28 @@ void openFile()
     int numPolig, numVertices; // quantidade de poligonos e vertices
     float x, y;
     inFile >> numPolig; // pega o núcleo para saber a quantidade de poligonos
-    std::list<Point> vertices;
     for (int i = 0; i < numPolig; ++i)
     {                          // percorrendo todos os poligonos
         inFile >> numVertices; // pegando os vertices
-        for (int j = 0; j < numVertices; j++)
-        {                             // percorrendo os vertices
-            inFile >> x >> y;         // colocando as coordenadas nas variaveis
-            pontos.push_back({x, y}); // adicionando na lista de pontos.
+        glBegin(GL_LINE_STRIP);
+        for (int j = 0; j < numVertices; j++) { //percorrendo todos os vértices
+            inFile >> x >> y; // pegando as coordenadas no arquivo
+            glVertex2f(x, y); // fazendo o desenho com o LINE STRIP através das coordenadas
         }
+        glEnd();
     }
     inFile.close();
+    glFlush();
 }
 
 void display()
 {
-    openFile();
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(1.0, 1.0, 1.0);
-    glBegin(GL_LINE_STRIP);
-    for (auto ponto = pontos.begin(); ponto != pontos.end(); ponto++)
-    {                                   // percorrendo a lista
-        glVertex2f(ponto->x, ponto->y); // desenhando as linhas
-    }
-    glEnd();
-    glFlush();
+    openFile();
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
