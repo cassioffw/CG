@@ -29,9 +29,6 @@ int main(int argc, char** argv) {
 
     glClearColor(0.0, 0.0, 0.0, 0.0);
 
-    glMatrixMode(GL_PROJECTION); // Define o modo de matriz de projeção
-    glLoadIdentity(); // Carrega a matriz identidade
-
     gluOrtho2D(-3.14, 3.14, -1.5, 1.5); // Configura a janela de visualização
 
     glutDisplayFunc(display);
