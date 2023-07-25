@@ -83,18 +83,12 @@ void openFile() {
 void calculaCentroMassa() {//percorre os vertices da face e faz o calculo do centro da massa
     float somaX = 0, somaY = 0, somaZ = 0;
     int totalPontos = 0;
-    for (auto it = listaIndice.begin(); it != listaIndice.end(); it++) {
-        for (auto it2 = it->begin(); it2 != it->end(); it2++) {
-            for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
-                for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
-                    if (std::distance(it3->begin(), it4) + 1 == *it2) {
-                        somaX += it4->getX();
-                        somaY += it4->getY();
-                        somaZ += it4->getZ();
-                        totalPontos++;
-                    }
-                }
-            }
+    for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
+        for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
+            somaX += it4->getX();
+            somaY += it4->getY();
+            somaZ += it4->getZ();
+            totalPontos++;
         }
     }
     centroMassaX = somaX / totalPontos;
@@ -103,56 +97,40 @@ void calculaCentroMassa() {//percorre os vertices da face e faz o calculo do cen
 }
 
 void rotateX(float angulo) { //percorre os vertices e aplica a formula da rotação no eixo X
-    for (auto it = listaIndice.begin(); it != listaIndice.end(); it++) {
-        for (auto it2 = it->begin(); it2 != it->end(); it2++) {
-            for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
-                for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
-                    if (std::distance(it3->begin(), it4) + 1 == *it2) {
-                        float x = it4->getX() + centroMassaX;
-                        float y = (it4->getY() - centroMassaY) * cos(angulo) - (it4->getZ() - centroMassaZ) * sin(angulo) + centroMassaY;
-                        float z = (it4->getY() - centroMassaY) * sin(angulo) + (it4->getZ() - centroMassaZ) * cos(angulo) + centroMassaZ;
-                        it4->setX(x);
-                        it4->setY(y);
-                        it4->setZ(z);
-                    }
-                }
-            }
+    for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
+        for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
+            float x = it4->getX() + centroMassaX;
+            float y = (it4->getY() - centroMassaY) * cos(angulo) - (it4->getZ() - centroMassaZ) * sin(angulo) + centroMassaY;
+            float z = (it4->getY() - centroMassaY) * sin(angulo) + (it4->getZ() - centroMassaZ) * cos(angulo) + centroMassaZ;
+            it4->setX(x);
+            it4->setY(y);
+            it4->setZ(z);
         }
     }
 }
 
 void rotateY(float angulo) {//percorre os vertices e aplica a formula da rotação no eixo Y
-    for (auto it = listaIndice.begin(); it != listaIndice.end(); it++) {
-        for (auto it2 = it->begin(); it2 != it->end(); it2++) {
-            for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
-                for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
-                    if (std::distance(it3->begin(), it4) + 1 == *it2) {
-                        float y = it4->getY() + centroMassaY;
-                        float x = (it4->getZ() - centroMassaZ) * cos(angulo) - (it4->getX() - centroMassaX) * sin(angulo) + centroMassaX;
-                        float z = (it4->getZ() - centroMassaZ) * sin(angulo) + (it4->getX() - centroMassaX) * cos(angulo) + centroMassaZ;
-                        it4->setX(x);
-                        it4->setY(y);
-                        it4->setZ(z);
-                    }
-                }
-            }
+    for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
+        for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
+            float y = it4->getY() + centroMassaY;
+            float x = (it4->getZ() - centroMassaZ) * cos(angulo) - (it4->getX() - centroMassaX) * sin(angulo) + centroMassaX;
+            float z = (it4->getZ() - centroMassaZ) * sin(angulo) + (it4->getX() - centroMassaX) * cos(angulo) + centroMassaZ;
+            it4->setX(x);
+            it4->setY(y);
+            it4->setZ(z);
         }
     }
 }
 
 void rotateZ(float angulo) { //percorre os vertices e aplica a formula da rotação no eixo Z
-    for (auto it = listaIndice.begin(); it != listaIndice.end(); it++) {
-        for (auto it2 = it->begin(); it2 != it->end(); it2++) {
-            for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
-                for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
-                    float z = it4->getZ() + centroMassaZ;
-                    float x = (it4->getX() - centroMassaX) * cos(angulo) - (it4->getY() - centroMassaX) * sin(angulo) + centroMassaX;
-                    float y = (it4->getX() - centroMassaX) * sin(angulo) + (it4->getY() - centroMassaX) * cos(angulo) + centroMassaY;
-                    it4->setX(x);
-                    it4->setY(y);
-                    it4->setZ(z);
-                }
-            }
+    for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
+        for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
+            float z = it4->getZ() + centroMassaZ;
+            float x = (it4->getX() - centroMassaX) * cos(angulo) - (it4->getY() - centroMassaX) * sin(angulo) + centroMassaX;
+            float y = (it4->getX() - centroMassaX) * sin(angulo) + (it4->getY() - centroMassaX) * cos(angulo) + centroMassaY;
+            it4->setX(x);
+            it4->setY(y);
+            it4->setZ(z);
         }
     }
 }
@@ -160,35 +138,27 @@ void rotateZ(float angulo) { //percorre os vertices e aplica a formula da rotaç
 void controleEscala(float taxaEscala) { //percorre todos os vertices e aplica a escala desejada.
     float tamanhoEscala = 1;
     tamanhoEscala += taxaEscala;
-    for (auto it = listaIndice.begin(); it != listaIndice.end(); it++) {
-        for (auto it2 = it->begin(); it2 != it->end(); it2++) {
-            for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
-                for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
-                    float x = (it4->getX() - centroMassaX) * tamanhoEscala + centroMassaX;
-                    float y = (it4->getY() - centroMassaY) * tamanhoEscala + centroMassaY;
-                    float z = (it4->getZ() - centroMassaZ) * tamanhoEscala + centroMassaZ;
-                    it4->setX(x);
-                    it4->setY(y);
-                    it4->setZ(z);
-                }
-            }
+    for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
+        for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
+            float x = (it4->getX() - centroMassaX) * tamanhoEscala + centroMassaX;
+            float y = (it4->getY() - centroMassaY) * tamanhoEscala + centroMassaY;
+            float z = (it4->getZ() - centroMassaZ) * tamanhoEscala + centroMassaZ;
+            it4->setX(x);
+            it4->setY(y);
+            it4->setZ(z);
         }
     }
 }
 
 void transladar(float taxaX, float taxaY, float taxaZ) { //percorre todos os vertices e aplica a taxa de translação desejada.
-    for (auto it = listaIndice.begin(); it != listaIndice.end(); it++) {
-        for (auto it2 = it->begin(); it2 != it->end(); it2++) {
-            for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
-                for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
-                    float x = it4->getX() + taxaX;
-                    float y = it4->getY() + taxaY;
-                    float z = it4->getZ() + taxaZ;
-                    it4->setX(x);
-                    it4->setY(y);
-                    it4->setZ(z);
-                }
-            }
+    for (auto it3 = listaFaces.begin(); it3 != listaFaces.end(); it3++) {
+        for (auto it4 = it3->begin(); it4 != it3->end(); it4++) {
+            float x = it4->getX() + taxaX;
+            float y = it4->getY() + taxaY;
+            float z = it4->getZ() + taxaZ;
+            it4->setX(x);
+            it4->setY(y);
+            it4->setZ(z);
         }
     }
 }
